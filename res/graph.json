@@ -57,5 +57,19 @@
     "connected": {
       "texture": "ZentangleVision.render"
     }
+  },
+  {
+    "id": "Dimension1",
+    "type": "dimension1"
+  },
+  {
+    "id": "DimentionMultiplexerShader",
+    "type": "dimentionMultiplexerShaderNode",
+    "options": {
+      "shader": "dimentionMultiplexerShader"
+    },
+    "connected": {
+      "texture": "Dimension1.render"
+    }
   }
 ]
