@@ -1,62 +1,61 @@
-uniform float frame;
-uniform sampler2D tDiffuse;
-uniform sampler2D z1;
-uniform sampler2D z2;
-uniform sampler2D z3;
-uniform sampler2D z4;
-uniform sampler2D z5;
-uniform sampler2D z6;
-
-#define number_of_zs 6
-#define EDGE_WIDTH 0.003
-
 varying vec2 vUv;
+uniform sampler2D tDiffuse;
+uniform sampler2D tDepth;
+uniform float cameraNear;
+uniform float cameraFar;
+uniform float blastDistance;
+
+#define camera_x 0.
+#define camera_y 0.
+#define camera_z -100.
+#define origin_x 0.
+#define origin_y 0.
+#define origin_z -15.
+#define blastWidth 10.
+// This is the base used to calculate the cameras edges. 
+// A camera with a far plane at 1 with an aspect ratio of
+// 16/9 will have the vertical edge at (1,1.4733).
+#define angle_unit_x 1.4733 
+#define aspect_ratio (16.0 / 9.0)
+
+
+/*float horizBars(float y)
+{
+  return 0.5 + sin(y * 10) / 2.0;
+} */
 
 void main() {
-    //gl_FragColor = vec4(vUv, 0.5 + 0.5 * sin(frame / 60.0), 1.0);
-    vec4 color = texture2D(tDiffuse, vUv);
-    
-    // Doing edge detection, simple sobel thingy
-    vec4 up = texture2D(tDiffuse, vec2(vUv.x, vUv.y + EDGE_WIDTH));
-    vec4 right = texture2D(tDiffuse, vec2(vUv.x + EDGE_WIDTH, vUv.y));
-    float red = abs(color.r-right.r)+abs(color.r-up.r);
-    float green = abs(color.g-right.g)+abs(color.g-up.g);
-    float blue = abs(color.b-right.b)+abs(color.b-up.b);
+  vec3 diffuse = texture2D(tDiffuse, vUv).rgb;
+  float depth = texture2D(tDepth, vUv).x;
 
+  float linear_depth = depth * ((cameraFar - cameraNear) + cameraNear) / cameraFar; // For now near is so close to the camera that this will do. Should be calculated more exact.
 
+  // Vector from camera to pixel
+  vec3 wsDir = vec3(   (vUv.x - 0.5) * 2.0 * angle_unit_x * cameraFar,
+                        (vUv.y - 0.5) * 2.0 * angle_unit_x / aspect_ratio * cameraFar,
+                        cameraFar
+                    );
 
+  vec3 camera_pos = vec3(camera_x, camera_y, camera_z);
+  
+  vec3 wsPos = camera_pos + wsDir * linear_depth;
 
+  // Origin of blast
+  vec3 origin = vec3(origin_x, origin_y, origin_z);
 
+  float distance_from_origin = distance(wsPos, origin);
 
-    float intensity = color.r * 0.2126 + color.g * 0.7152 + color.b * 0.0722;
-    vec4 zentangled_color;
-    if (intensity < 1./6.)
-    {
-      zentangled_color = texture2D(z1, vUv);
-    }
-    else if (intensity < 2./6.)
-    {
-      zentangled_color = texture2D(z2, vUv);
-    }
-    else if (intensity < 3./6.)
-    {
-      zentangled_color = texture2D(z3, vUv);
-    }
-    else if (intensity < 4./6.)
-    {
-      zentangled_color = texture2D(z4, vUv);
-    }
-    else if (intensity < 5./6.)
-    {
-      zentangled_color = texture2D(z5, vUv);
-    }
-    else
-    {
-      zentangled_color = texture2D(z6, vUv);
-    }
-    zentangled_color = vec4(zentangled_color.r - red * 1000.,
-                            zentangled_color.g - green * 1000., 
-                            zentangled_color.b - blue * 1000., 
-                            1.0);
-    gl_FragColor = zentangled_color;
+  if (distance_from_origin < blastDistance && distance_from_origin > blastDistance - blastWidth) {
+    float scanner_color = (1.0 + floor((0.5 + sin(vUv.y * 400.0) / 2.0) * 2.0)) / 2.0;
+    float scanner_intensity = (distance_from_origin - (blastDistance - blastWidth)) / blastWidth;
+    gl_FragColor.rgb = vec3(scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse.x,
+                            scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse.y,
+                            scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse.z
+                            ); 
+  }
+  else
+  {
+    gl_FragColor.rgb = diffuse;
+  }
+  gl_FragColor.a = 1.0;
 }

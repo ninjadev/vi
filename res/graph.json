@@ -14,7 +14,8 @@
       "B": "lightrings.render",
       "C": "intro.render",
       "D": "scannerShader.render",
-      "E": "ZentangleVisionShader.render"
+      "E": "ZentangleVisionShader.render",
+      "F": "dimentionMultiplexerShader.render"
     }
   },
   {
@@ -59,17 +60,18 @@
     }
   },
   {
-    "id": "Dimension1",
+    "id": "dimension1",
     "type": "dimension1"
   },
   {
-    "id": "DimentionMultiplexerShader",
+    "id": "dimentionMultiplexerShader",
     "type": "dimentionMultiplexerShaderNode",
     "options": {
       "shader": "dimentionMultiplexerShader"
     },
     "connected": {
-      "texture": "Dimension1.render"
+      "texture": "dimension1.render",
+      "depth": "dimension1.depth"
     }
   }
 ]
