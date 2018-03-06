@@ -1,5 +1,5 @@
 (function(global) {
-  class dimension1 extends NIN.THREENode {
+  class dimension2 extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
         camera: options.camera,
@@ -9,12 +9,12 @@
         }
       });
 
-      this.cube = new THREE.Mesh(new THREE.BoxGeometry(50, 5, 5),new THREE.MeshPhongMaterial({ color: 0xFF256F }));
+      this.cube = new THREE.Mesh(new THREE.BoxGeometry(50, 5, 5),new THREE.MeshPhongMaterial({ color: 0x0F256F }));
       this.scene.add(this.cube);
-      this.cube2 = new THREE.Mesh(new THREE.BoxGeometry(50, 5, 5),new THREE.MeshPhongMaterial({ color: 0xF30E53 }));
+      this.cube2 = new THREE.Mesh(new THREE.BoxGeometry(50, 5, 5),new THREE.MeshPhongMaterial({ color: 0x030E53 }));
       this.cube2.position.set(30, 20, 0);
       this.scene.add(this.cube2);
-      this.cube3 = new THREE.Mesh(new THREE.BoxGeometry(50, 5, 5),new THREE.MeshPhongMaterial({ color: 0xFA458A }));
+      this.cube3 = new THREE.Mesh(new THREE.BoxGeometry(50, 5, 5),new THREE.MeshPhongMaterial({ color: 0x0A458A }));
       this.cube3.position.set(-30, 30, 0);
       this.scene.add(this.cube3);
 
@@ -28,7 +28,7 @@
         for (var j = 0; j < 30; j++)
         {
           var cube = new THREE.Mesh(new THREE.BoxGeometry(2 + 2 * Math.random(), 2 + 2 * Math.random(), 2 + 2 * Math.random()),
-                                     new THREE.MeshPhongMaterial({ color: 0xFF256F }));
+                                     new THREE.MeshPhongMaterial({ color: 0x0F256F }));
           cube.position.x = - 120 + i * 4;
           cube.position.z = - 60 + j * 4;
           cube.position.y = Math.random() * 3 - j;
@@ -67,5 +67,5 @@
     }
   }
 
-  global.dimension1 = dimension1;
+  global.dimension2 = dimension2;
 })(this);

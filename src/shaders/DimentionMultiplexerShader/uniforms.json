@@ -1,6 +1,10 @@
 {
-    "tDiffuse": { "type": "t", "value": null },
-    "tDepth": { "type": "t", "value": null },
+    "tDiffuseBG": { "type": "t", "value": null },
+    "tDepthBG": { "type": "t", "value": null },
+    "tDiffuse1": { "type": "t", "value": null },
+    "tDepth1": { "type": "t", "value": null },
+    "tDiffuse2": { "type": "t", "value": null },
+    "tDepth2": { "type": "t", "value": null },
     "cameraNear": { "type": "f", "value": 0.0 },
     "cameraFar": { "type": "f", "value": 0.0 },
     "blastDistance": { "type": "f", "value": 0.0 },

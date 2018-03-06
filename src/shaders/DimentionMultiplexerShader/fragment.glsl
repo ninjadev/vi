@@ -1,6 +1,10 @@
 varying vec2 vUv;
-uniform sampler2D tDiffuse;
-uniform sampler2D tDepth;
+uniform sampler2D tDiffuseBG;
+uniform sampler2D tDepthBG;
+uniform sampler2D tDiffuse1;
+uniform sampler2D tDepth1;
+uniform sampler2D tDiffuse2;
+uniform sampler2D tDepth2;
 uniform float cameraNear;
 uniform float cameraFar;
 uniform float blastDistance;
@@ -25,8 +29,8 @@ uniform float blastDistance;
 } */
 
 void main() {
-  vec3 diffuse = texture2D(tDiffuse, vUv).rgb;
-  float depth = texture2D(tDepth, vUv).x;
+  vec3 diffuse = texture2D(tDiffuseBG, vUv).rgb;
+  float depth = texture2D(tDepthBG, vUv).x;
 
   float linear_depth = depth * ((cameraFar - cameraNear) + cameraNear) / cameraFar; // For now near is so close to the camera that this will do. Should be calculated more exact.
 

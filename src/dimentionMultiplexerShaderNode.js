@@ -2,15 +2,23 @@
   class dimentionMultiplexerShaderNode extends NIN.ShaderNode {
     constructor(id, options) {
       options.inputs = {
-         texture: new NIN.TextureInput(),
-         depth: new NIN.TextureInput(),
+         textureBG: new NIN.TextureInput(),
+         depthBG: new NIN.TextureInput(),
+         texture1: new NIN.TextureInput(),
+         depth1: new NIN.TextureInput(),
+         texture2: new NIN.TextureInput(),
+         depth2: new NIN.TextureInput(),
       }
       super(id, options);
     }
 
     update(frame) {
-      this.uniforms.tDiffuse.value = this.inputs.texture.getValue();
-      this.uniforms.tDepth.value = this.inputs.depth.getValue();
+      this.uniforms.tDiffuseBG.value = this.inputs.texture1.getValue();
+      this.uniforms.tDepthBG.value = this.inputs.depth1.getValue();
+      this.uniforms.tDiffuse1.value = this.inputs.texture1.getValue();
+      this.uniforms.tDepth1.value = this.inputs.depth1.getValue();
+      this.uniforms.tDiffuse2.value = this.inputs.texture1.getValue();
+      this.uniforms.tDepth2.value = this.inputs.depth1.getValue();
       this.uniforms.cameraNear.value = 50;
       this.uniforms.cameraFar.value = 150;
       this.uniforms.blastDistance.value = frame % 350;
