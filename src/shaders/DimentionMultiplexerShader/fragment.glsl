@@ -29,10 +29,13 @@ uniform float blastDistance;
 } */
 
 void main() {
-  vec3 diffuse = texture2D(tDiffuseBG, vUv).rgb;
-  float depth = texture2D(tDepthBG, vUv).x;
+  vec3 diffuseBG = texture2D(tDiffuseBG, vUv).rgb;
+  vec3 diffuse1 = texture2D(tDiffuse1, vUv).rgb;
+  vec3 diffuse2 = texture2D(tDiffuse2, vUv).rgb;
+  float depth1 = texture2D(tDepth1, vUv).x;
+  float depth2 = texture2D(tDepth2, vUv).x;
 
-  float linear_depth = depth * ((cameraFar - cameraNear) + cameraNear) / cameraFar; // For now near is so close to the camera that this will do. Should be calculated more exact.
+  float linear_depth = depth1 * ((cameraFar - cameraNear) + cameraNear) / cameraFar; // For now near is so close to the camera that this will do. Should be calculated more exact.
 
   // Vector from camera to pixel
   vec3 wsDir = vec3(   (vUv.x - 0.5) * 2.0 * angle_unit_x * cameraFar,
@@ -49,17 +52,17 @@ void main() {
 
   float distance_from_origin = distance(wsPos, origin);
 
-  if (distance_from_origin < blastDistance && distance_from_origin > blastDistance - blastWidth) {
-    float scanner_color = (1.0 + floor((0.5 + sin(vUv.y * 400.0) / 2.0) * 2.0)) / 2.0;
+  if (distance_from_origin < blastDistance) {
+    float scanner_color = (2.0 + floor((0.5 + sin(vUv.y * 400.0) / 2.0) * 2.0)) / 5.0;
     float scanner_intensity = (distance_from_origin - (blastDistance - blastWidth)) / blastWidth;
-    gl_FragColor.rgb = vec3(scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse.x,
-                            scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse.y,
-                            scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse.z
+    gl_FragColor.rgb = vec3(scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse1.x,
+                            scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse1.y,
+                            scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse1.z
                             ); 
   }
   else
   {
-    gl_FragColor.rgb = diffuse;
+    gl_FragColor.rgb = diffuse2;
   }
   gl_FragColor.a = 1.0;
 }
