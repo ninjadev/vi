@@ -8,13 +8,13 @@ uniform sampler2D tDepth2;
 uniform float cameraNear;
 uniform float cameraFar;
 uniform float blastDistance;
+uniform float origin_x;
+uniform float origin_y;
+uniform float origin_z;
 
 #define camera_x 0.
 #define camera_y 0.
-#define camera_z -100.
-#define origin_x 0.
-#define origin_y 0.
-#define origin_z -15.
+#define camera_z -100
 #define blastWidth 10.
 // This is the base used to calculate the cameras edges. 
 // A camera with a far plane at 1 with an aspect ratio of
