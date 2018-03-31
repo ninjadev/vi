@@ -15,7 +15,8 @@
       "C": "intro.render",
       "D": "scannerShader.render",
       "E": "ZentangleVisionShader.render",
-      "F": "dimentionMultiplexerShader.render"
+      "F": "dimentionMultiplexerShader.render",
+      "G": "cradle.render"
     }
   },
   {
@@ -85,5 +86,9 @@
       "texture2": "dimension2.render",
       "depth2": "dimension2.depth"
     }
+  },
+  {
+    "id": "cradle",
+    "type": "cradle"
   }
 ]
