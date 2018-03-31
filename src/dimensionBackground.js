@@ -14,9 +14,36 @@
       this.cube2 = new THREE.Mesh(new THREE.BoxGeometry(50, 5, 5),new THREE.MeshPhongMaterial({ color: 0x530E53 }));
       this.cube2.position.set(30, 20, 0);
       this.scene.add(this.cube2);
-      this.cube3 = new THREE.Mesh(new THREE.BoxGeometry(50, 5, 5),new THREE.MeshPhongMaterial({ color: 0x8A458A }));
+      this.cube3 = new THREE.Mesh(new THREE.BoxGeometry(30, 5, 5),new THREE.MeshPhongMaterial({ color: 0x8A458A }));
       this.cube3.position.set(-30, 30, 0);
       this.scene.add(this.cube3);
+
+      this.dimentionlens_model = new THREE.Object3D();
+      var loadObject = function (objPath, material, three_object) {
+        var objLoader = new THREE.OBJLoader();
+        Loader.loadAjax(objPath, function(text) {
+          var object = objLoader.parse(text);
+          object.traverse(function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material = material;
+              child.material.side = THREE.DoubleSide;
+              child.castShadow = true;
+              child.receiveShadow = true;
+            }
+          });
+          three_object.add(object);
+        });
+      };
+
+      var bestMaterial = new THREE.MeshPhongMaterial({color: 0x4A6B43});
+      //var bestMaterial = new THREE.MeshBasicMaterial({ color: 0x000fff });
+
+      loadObject('res/dimentionlens.obj', bestMaterial, this.dimentionlens_model );
+      this.scene.add( this.dimentionlens_model );
+      this.dimentionlens_model.scale.x = 24;
+      this.dimentionlens_model.scale.y = 24;
+      this.dimentionlens_model.scale.z = 24;
+
 
       this.bg = new THREE.Mesh(new THREE.BoxGeometry(221, 124, 0.0001),
                                  new THREE.MeshPhongMaterial({ color: 0x666666 })); // A background of max size ish. Useful to know how large that would be :)
@@ -58,6 +85,12 @@
       this.cube2.rotation.y = Math.cos(frame / 10);
       this.cube3.rotation.x = Math.sin(frame / 10);
       this.cube3.rotation.y = -Math.cos(frame / 10);
+
+      this.dimentionlens_model.position.x = 0.5 * 80 * Math.sin(frame / 30);
+      this.dimentionlens_model.position.y = 0;
+      this.dimentionlens_model.position.z = 15;
+      this.dimentionlens_model.rotation.y = frame / 20;
+
     }
 
     render(renderer) {
