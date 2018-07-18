@@ -23,7 +23,6 @@
 
     update(frame) {
       this.frame = frame;
-      this.dots = (frame) % 200 ;
     }
 
     renderShape(ctx, shape) {
@@ -31,24 +30,28 @@
     }
 
     render(renderer) {
-      this.ctx.globalCompositeOperation = 'xor';
+      this.ctx.globalCompositeOperation = 'source-over';
       this.ctx.clearRect(0, 0, 16 * GU, 9 * GU);
 
       this.circleEndSize = smoothstep(0, 1, (this.frame - 827) / (996 - 827));
 
-      const r = 140;
-      const g = 150;
-      const b = 90;
-      this.ctx.fillStyle = `rgb(${r|0}, ${g|0}, ${b|0})`;
-      this.ctx.beginPath();
-      this.ctx.ellipse(
-        GU,
-        GU,
-        GU,
-         GU,
-        0, 0, Math.PI * 2);
-      //ctx.closePath();
-      this.ctx.fill();
+      var colors = ["#729C34", "#265B6A"];
+
+      for (var i = 0; i < 5; i++)
+      {
+        this.ctx.fillStyle = colors[i % 2];
+        this.ctx.strokeStyle = colors[(1 + i) % 2];
+        this.ctx.beginPath();
+        this.ctx.ellipse(
+          -4 * GU + 3 * i * GU,
+          4.5 * GU,
+          GU + GU * Math.pow((this.frame - FRAME_FOR_BEAN(1152)) / 90, 7),
+          GU,
+          1, 0, Math.PI * 2);
+        this.ctx.lineWidth = 0.5 * GU ;
+        this.ctx.stroke();
+        this.ctx.fill();
+      }
 
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
