@@ -10,12 +10,13 @@
     "id": "sceneSwitcherNode",
     "type": "SceneSwitcherNode",
     "connected": {
-      "A": "SpinningCube.render",
+      "A": "depthDrawingShader.render",
       "B": "lightrings.render",
       "C": "intro.render",
       "D": "scannerShader.render",
       "E": "ZentangleVisionShader.render",
-      "F": "dimentionMultiplexerShader.render"
+      "F": "dimentionMultiplexerShader.render",
+      "G": "cradle.render"
     }
   },
   {
@@ -44,6 +45,21 @@
   {
     "id": "scanner",
     "type": "scanner"
+  },
+  {
+    "id": "depthDrawingShader",
+    "type": "depthDrawingShaderNode",
+    "options": {
+      "shader": "depthDrawingShader"
+    },
+    "connected": {
+      "texture": "depthDrawingBackgroundNode.render",
+      "depth": "depthDrawingBackgroundNode.depth"
+    }
+  },
+  {
+    "id": "depthDrawingBackgroundNode",
+    "type": "depthDrawingBackgroundNode"
   },
   {
     "id": "ZentangleVision",
@@ -85,5 +101,9 @@
       "texture2": "dimension2.render",
       "depth2": "dimension2.depth"
     }
+  },
+  {
+    "id": "cradle",
+    "type": "cradle"
   }
 ]

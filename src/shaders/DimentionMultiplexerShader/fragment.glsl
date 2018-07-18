@@ -8,13 +8,13 @@ uniform sampler2D tDepth2;
 uniform float cameraNear;
 uniform float cameraFar;
 uniform float blastDistance;
+uniform float origin_x;
+uniform float origin_y;
+uniform float origin_z;
 
 #define camera_x 0.
 #define camera_y 0.
-#define camera_z -100.
-#define origin_x 0.
-#define origin_y 0.
-#define origin_z -15.
+#define camera_z -100
 #define blastWidth 10.
 // This is the base used to calculate the cameras edges. 
 // A camera with a far plane at 1 with an aspect ratio of
@@ -32,6 +32,7 @@ void main() {
   vec3 diffuseBG = texture2D(tDiffuseBG, vUv).rgb;
   vec3 diffuse1 = texture2D(tDiffuse1, vUv).rgb;
   vec3 diffuse2 = texture2D(tDiffuse2, vUv).rgb;
+  float depthBG = texture2D(tDepthBG, vUv).x;
   float depth1 = texture2D(tDepth1, vUv).x;
   float depth2 = texture2D(tDepth2, vUv).x;
 
@@ -52,17 +53,33 @@ void main() {
 
   float distance_from_origin = distance(wsPos, origin);
 
-  if (distance_from_origin < blastDistance) {
-    float scanner_color = (2.0 + floor((0.5 + sin(vUv.y * 400.0) / 2.0) * 2.0)) / 5.0;
-    float scanner_intensity = (distance_from_origin - (blastDistance - blastWidth)) / blastWidth;
-    gl_FragColor.rgb = vec3(scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse1.x,
-                            scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse1.y,
-                            scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse1.z
-                            ); 
+  if (distance_from_origin < blastDistance) 
+  {
+    if (depth1 > depthBG)
+    {
+      gl_FragColor.rgb = diffuseBG;
+    }
+    else
+    {
+      float scanner_color = (2.0 + floor((0.5 + sin(vUv.y * 400.0) / 2.0) * 2.0)) / 5.0;
+      float scanner_intensity = (distance_from_origin - (blastDistance - blastWidth)) / blastWidth;
+      gl_FragColor.rgb = vec3(scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse1.x,
+                              scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse1.y,
+                              scanner_color * scanner_intensity + (1.0 - scanner_intensity) * diffuse1.z
+                              );
+    }
   }
   else
   {
-    gl_FragColor.rgb = diffuse2;
+    //if (tDepth2 < tDepthBG)
+    if (depth2 > depthBG)
+    {
+      gl_FragColor.rgb = diffuseBG;
+    }
+    else
+    {
+      gl_FragColor.rgb = diffuse2;
+    }
   }
   gl_FragColor.a = 1.0;
 }
