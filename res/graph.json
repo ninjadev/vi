@@ -16,7 +16,8 @@
       "D": "scannerShader.render",
       "E": "ZentangleVisionShader.render",
       "F": "dimentionMultiplexerShader.render",
-      "G": "cradle.render"
+      "G": "cradle.render",
+      "H": "SToneInc.render"
     }
   },
   {
@@ -105,5 +106,9 @@
   {
     "id": "cradle",
     "type": "cradle"
+  },
+  {
+    "id": "SToneInc",
+    "type": "SToneInc"
   }
 ]
