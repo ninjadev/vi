@@ -48,10 +48,27 @@
     update(frame) {
       super.update(frame);
 
-      this.camera2.position.x = 150 * Math.sin(frame / 100);
-      this.camera2.position.z = 150 * Math.cos(frame / 100);
-      this.camera2.position.y = 100;
-      this.camera2.lookAt(new THREE.Vector3(0, -40, 0));
+      if (frame < 197) {
+        this.camera2.position.x = 150 * Math.sin(frame / 300);
+        this.camera2.position.z = 150 * Math.cos(frame / 300);
+        this.camera2.position.y = 100;
+        this.camera2.lookAt(new THREE.Vector3(0, -40, 0));
+      } else if (frame < 411) {
+        this.camera2.position.x = 150 * Math.sin(100 - frame / 100);
+        this.camera2.position.z = 150 * Math.cos(100 - frame / 100);
+        this.camera2.position.y = 100;
+        this.camera2.lookAt(new THREE.Vector3(0, -40, 0));
+      } else if (frame < 502) {
+        this.camera2.position.x = 150 * Math.sin(100 + frame / 100);
+        this.camera2.position.z = 150 * Math.cos(100 + frame / 100);
+        this.camera2.position.y = 100;
+        this.camera2.lookAt(new THREE.Vector3(0, -40, 0));
+      } else {
+        this.camera2.position.x = 150 * Math.sin(100 - frame / 300);
+        this.camera2.position.z = 150 * Math.cos(100 - frame / 300);
+        this.camera2.position.y = 200;
+        this.camera2.lookAt(new THREE.Vector3(0, -40, 0));
+      }
     }
 
     render(renderer) {

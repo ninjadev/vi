@@ -45,38 +45,11 @@
       this.inputs.P.enabled = false;
 
       let selectedScene;
-      if (BEAN < 48 * 54) {
+      var frame = FRAME_FOR_BEAN(BEAN);
+      if (frame < 737) {
         selectedScene = this.inputs.A;
-      } else if (BEAN < 48 * 98) {
-        selectedScene = this.inputs.H;
-      } else if (BEAN < 48 * 62) {
-        selectedScene = this.inputs.C;
-      } else if (BEAN < 48 * 66) {
-        selectedScene = this.inputs.D;
-      } else if (BEAN < 48 * 60) {
-        selectedScene = this.inputs.E;
-      } else if (BEAN < 48 * 64) {
-        selectedScene = this.inputs.F;
-      } else if (BEAN < 48 * 68) {
-        selectedScene = this.inputs.G;
-      } else if (BEAN < 48 * 32) {
-        selectedScene = this.inputs.H;
-      } else if (BEAN < 48 * 36) {
-        selectedScene = this.inputs.I;
-      } else if (BEAN < 48 * 40) {
-        selectedScene = this.inputs.J;
-      } else if (BEAN < 48 * 44) {
-        selectedScene = this.inputs.K;
-      } else if (BEAN < 48 * 48) {
-        selectedScene = this.inputs.L;
-      } else if (BEAN < 48 * 52) {
-        selectedScene = this.inputs.M;
-      } else if (BEAN < 48 * 56) {
-        selectedScene = this.inputs.N;
-      } else if (BEAN < 48 * 60) {
-        selectedScene = this.inputs.O;
       } else {
-        selectedScene = this.inputs.P;
+        selectedScene = this.inputs.E ;
       }
 
       selectedScene.enabled = true;
