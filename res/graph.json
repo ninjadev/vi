@@ -73,7 +73,8 @@
       "shader": "ZentangleVisionShader"
     },
     "connected": {
-      "texture": "ZentangleVision.render"
+      "texture": "ZentangleVision.render",
+      "bgone": "depthDrawingShader.render"
     }
   },
   {

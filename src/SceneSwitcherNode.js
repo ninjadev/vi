@@ -47,7 +47,7 @@
       let selectedScene;
       var frame = FRAME_FOR_BEAN(BEAN);
       if (frame < 737) {
-        selectedScene = this.inputs.A;
+        selectedScene = this.inputs.E;
       } else {
         selectedScene = this.inputs.E ;
       }

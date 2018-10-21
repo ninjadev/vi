@@ -23,7 +23,45 @@
       this.bg.position.z = -49; // just within the cameras view
       this.scene.add(this.bg);
 
-      for (var i = 0; i < 10; i++)
+      this.leftw = new THREE.Object3D();
+      this.rightw = new THREE.Object3D();
+      var loadObject = function (objPath, material, three_object) {
+        var objLoader = new THREE.OBJLoader();
+        Loader.loadAjax(objPath, function(text) {
+          var object = objLoader.parse(text);
+          object.traverse(function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material = material;
+              child.material.side = THREE.DoubleSide;
+              child.castShadow = true;
+              child.receiveShadow = true;
+            }
+          });
+          three_object.add(object);
+        });
+      };
+
+      var flat_material_1 = new THREE.MeshBasicMaterial({color: 0x999999});
+      var flat_material_2 = new THREE.MeshBasicMaterial({color: 0xEEEEEE});
+      var flat_material_3 = new THREE.MeshBasicMaterial({color: 0x555555});
+      var flat_material_4 = new THREE.MeshBasicMaterial({color: 0x333333});
+
+      loadObject('res/leftw.obj', flat_material_1, this.leftw );
+      loadObject('res/rightw.obj', flat_material_2, this.rightw );
+
+      this.leftw_o = new THREE.Object3D();
+      this.rightw_o = new THREE.Object3D();
+
+      this.leftw_o.add(this.leftw);
+      this.rightw_o.add(this.rightw);
+
+      this.scene.add(this.leftw_o);
+      this.scene.add(this.rightw_o);
+
+      this.leftw_o.rotation.x = -Math.PI / 2;
+      this.rightw_o.rotation.x = -Math.PI / 2;
+
+      /*for (var i = 0; i < 10; i++)
       {
         for (var j = 0; j < 10; j++)
         {
@@ -37,14 +75,31 @@
           cube.position.y = Math.random() * 3 - j * 3 ;
           this.scene.add(cube);
         }
-      }
+      }*/
     }
 
     update(frame) {
       super.update(frame);
 
-      this.cube.rotation.x = Math.sin(frame / 10);
-      this.cube.rotation.y = Math.cos(frame / 10);
+      if (frame < 732) {
+        this.cube.position.x = 10000;        
+      } else {
+        this.cube.position.x = 10000;
+        this.cube.rotation.x = Math.sin(frame / 10);
+        this.cube.rotation.y = Math.cos(frame / 10);
+
+        var scale1 = 7;
+        this.leftw_o.scale.x = scale1;
+        this.leftw_o.scale.y = scale1;
+        this.leftw_o.scale.z = scale1;
+
+        var scale2 = 7;
+        this.rightw_o.scale.x = scale2;
+        this.rightw_o.scale.y = scale2;
+        this.rightw_o.scale.z = scale2;
+
+      }
+
     }
   }
 

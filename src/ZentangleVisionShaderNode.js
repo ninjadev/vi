@@ -3,6 +3,7 @@
     constructor(id, options) {
       options.inputs = {
          texture: new NIN.TextureInput(),
+         bgone: new NIN.TextureInput(),
       }
       super(id, options);
 
@@ -17,7 +18,7 @@
     }
 
     update(frame) {
-      if (frame % 200 < 100)
+      if (false)
       {
         this.uniforms.tDiffuse.value = this.inputs.texture.getValue();
         this.uniforms.z1.value = this.z1;
@@ -33,7 +34,7 @@
         this.uniforms.tDiffuse.value = this.inputs.texture.getValue();
         this.uniforms.z1.value = this.inputs.texture.getValue();
         this.uniforms.z2.value = this.inputs.texture.getValue();
-        this.uniforms.z3.value = this.inputs.texture.getValue();
+        this.uniforms.z3.value = this.inputs.bgone.getValue();
         this.uniforms.z4.value = this.inputs.texture.getValue();
         this.uniforms.z5.value = this.inputs.texture.getValue();
         this.uniforms.z6.value = this.inputs.texture.getValue();
